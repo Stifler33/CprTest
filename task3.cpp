@@ -19,15 +19,15 @@ int main(){
 
     if (request.back()[0] == "get"){
         string ReqUrl = "http://httpbin.org/get?";
-        auto& ReqEnd = request.back();
-        vector<vector<string>>::iterator itReq = request.end();
-        itReq -= 2;
         for (auto& VecReq : request){
             if (VecReq != request.back()) {
                 ReqUrl += VecReq[0] + '=' + VecReq[1];
             }
+            countElement--;
+            if(countElement > 1) ReqUrl += '&';
         }
-        cout << ReqUrl;
+        cpr::Response r = cpr::Get(cpr::Url(ReqUrl));
+        cout << r.text << endl;
     }else if (request.back()[0] == "post"){
 
     }
