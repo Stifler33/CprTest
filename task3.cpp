@@ -29,8 +29,15 @@ int main(){
         cpr::Response r = cpr::Get(cpr::Url(ReqUrl));
         cout << r.text << endl;
     }else if (request.back()[0] == "post"){
-
+        vector<cpr::Pair> pairList;
+        for (auto& VecReq : request){
+            if (VecReq != request.back()) {
+                pairList.emplace_back(cpr::Pair{VecReq[0].c_str(), VecReq[1].c_str()});
+            }
+        }
+        cpr::Response rp = cpr::Post(cpr::Url{"http://httpbin.org/post"},
+                                     cpr::Payload(pairList.begin(), pairList.end()));
+        cout << rp.text << endl;
     }
-
     return 0;
 }
